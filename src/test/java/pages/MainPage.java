@@ -1,14 +1,12 @@
 package pages;
 
 import model.Product;
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.testng.asserts.SoftAssert;
 
 import java.util.List;
-
-import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 public class MainPage extends PageBase {
 
@@ -21,13 +19,13 @@ public class MainPage extends PageBase {
     private static final String CHECKOUT_LINK_LOCATOR = "//div[@id='cart']//a[3]";
 
 
-    public SoftAssert verifyStickers() {
-        SoftAssert softAssert = new SoftAssert();
+    public SoftAssertions verifyStickers() {
+        SoftAssertions softAssert = new SoftAssertions();
         List<WebElement> productBoxes = driver.findElements(By.className(ALL_PRODUCTS_LOCATOR));
         productBoxes.forEach(e -> {
             List<WebElement> stickers = (e.findElements(By.className(STICKER_LOCATOR)));
             System.out.println("For '" + e.getText() + "' stickers count = " + stickers.size() + "\n");
-            softAssert.assertEquals(stickers.size(), 1);
+            softAssert.assertThat(stickers.size()).isEqualTo(1);
 
         });
         return softAssert;

@@ -1,9 +1,9 @@
 package pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 

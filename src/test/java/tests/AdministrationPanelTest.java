@@ -1,19 +1,21 @@
 package tests;
 
+import io.cucumber.java.Before;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import model.Product;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Select;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
@@ -51,8 +53,13 @@ public class AdministrationPanelTest extends TestBase {
     private static final String MANUFACTURER_SELECTOR_LOCATOR = "//select[@name='manufacturer_id']";
     private static final String CURRENCY_SELECTOR_LOCATOR = "//select[@name='purchase_price_currency_code']";
 
-    @Test
-    private void testAdminPageLogin() {
+    @Before
+    public void init() {
+        initWebDriver();
+    }
+
+    @Given("I sign in as admin$")
+    public void i_sign_in_as_admin() {
         System.out.println("--- testAdminPageLogin ---");
         driver.navigate().to(TestBase.BASE_URL + "/admin/");
         wait.until(titleIs("My Store"));
@@ -63,16 +70,15 @@ public class AdministrationPanelTest extends TestBase {
         Assert.assertTrue(driver.findElement(By.xpath(LOGOUT_LOCATOR)).isDisplayed());
     }
 
-    @Test
-    private void testAdminPageLogout() {
+    @Then("I logout as admin$")
+    public void i_logout_as_admin() {
         System.out.println("--- testAdminPageLogout ---");
         driver.findElement(By.xpath(LOGOUT_LOCATOR)).click();
         Assert.assertTrue(driver.findElement(By.name("login")).isDisplayed());
     }
 
-    @Test
-    private void testAdminPageBoxAppMenu() {
-        testAdminPageLogin();
+    @Then("I verify page box app menu$")
+    public void i_verify_page_box_app_menu() {
         System.out.println("--- testAdminPageBoxAppMenu ---");
         List<WebElement> liAppMenus = (driver.findElements(By.id("app-")));
         int liCount = liAppMenus.size();
@@ -91,25 +97,17 @@ public class AdministrationPanelTest extends TestBase {
                 Assert.assertTrue(driver.findElement(By.xpath("//h1")).isDisplayed());
             }
         }
-
-        testAdminPageLogout();
     }
 
-    @Test
-    private void testCountriesSorting() {
-
-        testAdminPageLogin();
+    @Then("I verify countries sorting$")
+    public void testCountriesSorting() {
         System.out.println("--- testCountriesSorting ---");
         driver.navigate().to(COUNTRY_PAGE_URL);
-
         verifyCountryNamesSorting(COUNTRY_NAME_LOCATOR);
-
-        testAdminPageLogout();
     }
 
-    @Test
-    private void testCountryZonesSorting() {
-        testAdminPageLogin();
+    @And("I verify country zones sorting$")
+    public void testCountryZonesSorting() {
         System.out.println("--- testCountriesSorting ---");
         driver.navigate().to(COUNTRY_PAGE_URL);
         String zonesCountryNameLocator = "//html//table[@id='table-zones']//tr/td[3]";
@@ -130,12 +128,10 @@ public class AdministrationPanelTest extends TestBase {
                 zones = driver.findElements(By.xpath(COUNTRY_ZONE_LOCATOR));
             }
         }
-        testAdminPageLogout();
     }
 
-    @Test
-    private void testGeoZonesSorting() {
-        testAdminPageLogin();
+    @And("I verify geo zones sorting$")
+    public void testGeoZonesSorting() {
         System.out.println("--- testGeoZonesSorting ---");
         driver.navigate().to(GEOZONES_URL);
 
@@ -154,12 +150,10 @@ public class AdministrationPanelTest extends TestBase {
             driver.navigate().to(GEOZONES_URL);
             countries = driver.findElements(By.xpath(countryLocator));
         }
-        testAdminPageLogout();
     }
 
-    @Test
-    private void testEditCountryPageExternalLinks() {
-        testAdminPageLogin();
+    @And("I verify edit country page external links$")
+    public void testEditCountryPageExternalLinks() {
         System.out.println("--- testEditCountryPageExternalLinks ---");
         driver.navigate().to(COUNTRY_PAGE_URL);
         driver.findElement(By.xpath(COUNTRY_NAME_LOCATOR)).click();
@@ -173,25 +167,19 @@ public class AdministrationPanelTest extends TestBase {
             String externalLinkValue = externalLinks.get(i).getAttribute("href");
             System.out.println("Link to open: " + externalLinkValue);
             externalLinks.get(i).click();
-
             String newWindow = wait.until(thereIsWindowOtherThan(oldWindows));
             driver.switchTo().window(newWindow);
-
             System.out.println("Link opened: " + driver.getCurrentUrl() + "\n");
-
             driver.close();
             driver.switchTo().window(mainWindow);
 
             externalLinks = driver.findElements(By.xpath(EXTERNAL_LINK_LOCATOR));
         }
-        testAdminPageLogout();
     }
 
-    @Test
-    private void testAddNewProduct() {
-        testAdminPageLogin();
+    @Then("I add a new product$")
+    public void i_add_a_new_product() {
         System.out.println("--- testAddNewProduct ---");
-
         Product duck = new Product(
                 "Custom Duck " + System.currentTimeMillis(),
                 "10",
@@ -243,14 +231,12 @@ public class AdministrationPanelTest extends TestBase {
         driver.findElement(By.xpath(CATALOG_CUSTOM_LINK_LOCATOR)).click();
 
         Assert.assertTrue(driver.findElement(By.xpath("//a[text()[contains(.,'" + duck.getName() + "')]]")).isDisplayed());
-
-        testAdminPageLogout();
     }
 
-    @Test
-    private void testAdminPanelConsoleLog() {
-        SoftAssert softAssert = new SoftAssert();
-        testAdminPageLogin();
+    @Then("I verify admin panel console log$")
+    public void i_verify_admin_panel_console_log() {
+        SoftAssertions softAssert = new SoftAssertions();
+        //  testAdminPageLogin();
         System.out.println("--- testAdminPanelConsoleLog ---");
 
         driver.findElement(By.xpath(CATALOG_LOCATOR)).click();
@@ -264,21 +250,21 @@ public class AdministrationPanelTest extends TestBase {
 
             for (LogEntry l : driver.manage().logs().get("browser").getAll()) {
                 System.out.println(l);
-                softAssert.assertNull(l);
+                softAssert.assertThat(l).is(null);
             }
 
             driver.navigate().back();
             productLinks = driver.findElements(By.xpath(PRODUCT_LINK_LOCATOR));
         }
         softAssert.assertAll();
-        testAdminPageLogout();
+        //  testAdminPageLogout();
     }
 
     private void verifyCountryNamesSorting(String locator) {
         List<String> countryNames = new ArrayList<>();
         driver.findElements(By.xpath(locator)).forEach(e -> countryNames.add(e.getText()));
 
-        List<String> toBeSortedCountryNames = new ArrayList<>( countryNames );
+        List<String> toBeSortedCountryNames = new ArrayList<>(countryNames);
         java.util.Collections.sort(toBeSortedCountryNames);
 
         System.out.println("Actual: " + countryNames);

@@ -1,16 +1,23 @@
 package tests;
 
+import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
 import model.User;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
 import pages.BoxAccountPageBlock;
 import pages.CreateAccountPage;
 import pages.MainPage;
 
 public class AccountServiceTest extends TestBase {
 
-    @Test
-    private void testUserLogin() {
+    @Before
+    public void init() {
+        initWebDriver();
+    }
+
+    @When("I sign in$")
+    public void i_sign_in() {
         System.out.println("--- testUserLogin ---");
         User user = new User("user123@example.com", "qwe123");
         BoxAccountPageBlock boxAccountPageBlock = new BoxAccountPageBlock(driver);
@@ -18,16 +25,15 @@ public class AccountServiceTest extends TestBase {
         Assert.assertTrue(boxAccountPageBlock.verifyUserLogin(user.getLogin(), user.getPassword()));
     }
 
-    @Test
-    private void testUserLogout() {
+    @When("I sign out$")
+    public void i_sign_out() {
         System.out.println("--- testUserLogout ---");
         BoxAccountPageBlock boxAccountPageBlock = new BoxAccountPageBlock(driver);
         Assert.assertTrue(boxAccountPageBlock.verifyUserLogout());
     }
 
-
-    @Test
-    private void testCreateAccount() {
+    @Given("I create account$")
+    public void i_create_account() {
         System.out.println("--- testCreateAccount ---");
         User user = new User();
         System.out.println(user.getLogin() + " " + user.getPassword());

@@ -1,9 +1,12 @@
 package tests;
 
+import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import model.Product;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.Assert;
 import pages.CartPage;
 import pages.MainPage;
 import pages.PageBase;
@@ -11,19 +14,24 @@ import pages.ProductDetailsPage;
 
 public class MainPageTest extends TestBase {
 
-    @Test
-    private void testMainPageProductSticker() {
+    @Before
+    public void init() {
+        initWebDriver();
+    }
+
+    @Given("I verify page product sticker$")
+    public void i_verify_page_product_sticker() {
         System.out.println("--- testMainPageProductSticker ---");
 
         PageBase mainPage = new MainPage(driver);
         mainPage.open(BASE_URL);
 
-        SoftAssert softAssert = ((MainPage) mainPage).verifyStickers();
+        SoftAssertions softAssert = ((MainPage) mainPage).verifyStickers();
         softAssert.assertAll();
     }
 
-    @Test
-    private void testProductDetails() {
+    @Then("I verify product details$")
+    public void i_verify_product_details() {
         System.out.println("--- testProductDetails ---");
         MainPage mainPage = new MainPage(driver);
         mainPage.open(BASE_URL);
@@ -39,8 +47,8 @@ public class MainPageTest extends TestBase {
         Assert.assertEquals(mainPageDuck, detailsPageDuck);
     }
 
-    @Test
-    private void testProductDetailsElements() {
+    @Then("I verify product details elements")
+    public void i_verify_product_details_elements() {
         System.out.println("--- testProductDetailsElements ---");
         MainPage mainPage = new MainPage(driver);
         mainPage.open(BASE_URL);
@@ -52,8 +60,8 @@ public class MainPageTest extends TestBase {
         productDetailsPage.verifyProductDetailsElements();
     }
 
-    @Test
-    private void testCartAddProduct() {
+    @When("I add product to cart$")
+    public void testCartAddProduct() {
         System.out.println("--- testCartAddProduct ---");
         MainPage mainPage = new MainPage(driver);
         mainPage.open(BASE_URL);
