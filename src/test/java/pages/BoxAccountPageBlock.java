@@ -1,7 +1,10 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+
+import java.util.function.Function;
 
 public class BoxAccountPageBlock extends PageBase {
     private static final String EMAIL_INPUT_LOCATOR = "//input[@name='email']";
@@ -19,7 +22,11 @@ public class BoxAccountPageBlock extends PageBase {
     }
 
     public boolean verifyUserLogout(){
+        wait.until((Function<WebDriver, Object>) driver ->
+                driver.findElement(By.xpath(LOGOUT_USER_LOCATOR)).isDisplayed());
         driver.findElement(By.xpath(LOGOUT_USER_LOCATOR)).click();
+        wait.until((Function<WebDriver, Object>) driver ->
+                driver.findElement(By.xpath(LOGIN_BUTTON_LOCATOR)).isDisplayed());
         return driver.findElement(By.xpath(LOGIN_BUTTON_LOCATOR)).isDisplayed();
     }
 

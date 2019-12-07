@@ -2,9 +2,11 @@ package tests;
 
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import model.Step;
 import model.User;
+import org.junit.After;
 import org.junit.Assert;
 import pages.BoxAccountPageBlock;
 import pages.CreateAccountPage;
@@ -12,12 +14,23 @@ import pages.MainPage;
 
 public class AccountServiceTest extends TestBase {
 
+    BoxAccountPageBlock boxAccountPageBlock;
+    private CreateAccountPage createAccountPage;
+    private User user;
+
     @Before
     public void init() {
         initWebDriver();
     }
 
-    @Step(shortName = "login", followedSteps = "logout")
+    @After
+    public void beforeTest() {
+        createAccountPage = null;
+        user = null;
+        boxAccountPageBlock = null;
+    }
+
+    @Step(shortName = "login", followedSteps = {"logout", "verifyProductStickerIsDisplayed", "openProductDetailsPage", "openCampaignProductDetailsPage", "openCartPageByCheckout"})
     @When("I sign in$")
     public void i_sign_in() {
         System.out.println("--- testUserLogin ---");
@@ -35,21 +48,29 @@ public class AccountServiceTest extends TestBase {
         Assert.assertTrue(boxAccountPageBlock.verifyUserLogout());
     }
 
-    @Step(shortName = "createAccount", followedSteps = "logout")
-    @Given("I create account$")
+    @Step(shortName = "openCreateAccountPage", followedSteps = {"fillCreateAccountFields"})
+    @Given("I open create account page$")
     public void i_create_account() {
         System.out.println("--- testCreateAccount ---");
-        User user = new User();
-        System.out.println(user.getLogin() + " " + user.getPassword());
-        CreateAccountPage createAccountPage = new CreateAccountPage(driver);
+        createAccountPage = new CreateAccountPage(driver);
         createAccountPage.open(BASE_URL);
+    }
 
+    @Step(shortName = "fillCreateAccountFields", followedSteps = {"loginWithCreatedAccount"})
+    @Then("I fill account fields$")
+    public void i_fill_account_fields() {
+        user = new User();
+        System.out.println(user.getLogin() + " " + user.getPassword());
+        createAccountPage = new CreateAccountPage(driver);
         createAccountPage.fillCreateAccountFields(user);
-
         Assert.assertTrue(new MainPage(driver).verifySuccessMessage());
-
-        BoxAccountPageBlock boxAccountPageBlock = new BoxAccountPageBlock(driver);
+        boxAccountPageBlock = new BoxAccountPageBlock(driver);
         Assert.assertTrue(boxAccountPageBlock.verifyUserLogout());
+    }
+
+    @Step(shortName = "loginWithCreatedAccount", followedSteps = {"verifyProductStickerIsDisplayed", "verifyProductDetailsPageElements", "openCampaignProductDetailsPage", "openCartPageByCheckout"})
+    @Then("I login with created account$")
+    public void i_login_with_created_account() {
         Assert.assertTrue(boxAccountPageBlock.verifyUserLogin(user.getLogin(), user.getPassword()));
         Assert.assertTrue(boxAccountPageBlock.verifyUserLogout());
     }

@@ -5,6 +5,6 @@ import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(junit = "--step-notifications", features = "src/test/resources/features/", glue = "", tags = {"@loginAndLogout"})
+@CucumberOptions(junit = "--step-notifications", features = "src/test/resources/features/", glue = "", tags = {"@none"})
 public class TestRunner {
 }

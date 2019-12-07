@@ -9,8 +9,8 @@ import java.util.function.Function;
 public class CartPage extends PageBase {
 
     private static final String EMPTY_CART_MESSAGE_LOCATOR = "//html//p[1]//em";
-    private static final String CART_REMOVE_PRODUCT_LOCATOR = "//button[@name='remove_cart_item']";
-    private static final String CART_FORM_LOCATOR = "[name =cart_form]";
+    private static final String CART_REMOVE_PRODUCT_LOCATOR = "[name=remove_cart_item]";
+    private static final String CART_FORM_LOCATOR = "[name=cart_form]";
 
     public CartPage(EventFiringWebDriver driver) {
         super(driver);

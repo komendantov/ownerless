@@ -20,7 +20,7 @@ public class MainPageTest extends TestBase {
         initWebDriver();
     }
 
-    @Step(shortName = "mainPageProductSticker" , followedSteps = "logout")
+    @Step(shortName = "verifyProductStickerIsDisplayed")
     @Given("I verify page product sticker$")
     public void i_verify_page_product_sticker() {
         System.out.println("--- testMainPageProductSticker ---");
@@ -32,7 +32,7 @@ public class MainPageTest extends TestBase {
         softAssert.assertAll();
     }
 
-    @Step(shortName = "productDetails" , followedSteps = "logout")
+    @Step(shortName = "verifyProductDetails", followedSteps = {"addProductToCart"})
     @Then("I verify product details$")
     public void i_verify_product_details() {
         System.out.println("--- testProductDetails ---");
@@ -50,7 +50,7 @@ public class MainPageTest extends TestBase {
         Assert.assertEquals(mainPageDuck, detailsPageDuck);
     }
 
-    @Step(shortName = "productDetailsElements" , followedSteps = "logout")
+    @Step(shortName = "verifyProductDetailsPageElements")
     @Then("I verify product details elements")
     public void i_verify_product_details_elements() {
         System.out.println("--- testProductDetailsElements ---");
@@ -64,19 +64,24 @@ public class MainPageTest extends TestBase {
         productDetailsPage.verifyProductDetailsElements();
     }
 
-    @Step(shortName = "cartAddProduct" , followedSteps = "logout")
+    @Step(shortName = "addProductToCart")
     @When("I add product to cart$")
     public void testCartAddProduct() {
         System.out.println("--- testCartAddProduct ---");
         MainPage mainPage = new MainPage(driver);
         mainPage.open(BASE_URL);
-
         for (int i = 0; i < 3; i++) {
             ProductDetailsPage productDetailsPage = mainPage.openFirstProductDetailsPage();
             productDetailsPage.addProductToCart();
             mainPage.open(BASE_URL);
         }
+    }
 
+    @Step(shortName = "removeAllFromCart", followedSteps = {"addProductToCart"})
+    @Then("I remove all from cart")
+    public void i_remove_all_from_cart() {
+        MainPage mainPage = new MainPage(driver);
+       // mainPage.open(BASE_URL);
         CartPage cartPage = mainPage.checkout();
         cartPage.cartRemoveAll();
         Assert.assertTrue(cartPage.cartIsEmpty());
