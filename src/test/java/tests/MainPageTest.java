@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import model.Product;
+import model.Step;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Assert;
 import pages.CartPage;
@@ -19,6 +20,7 @@ public class MainPageTest extends TestBase {
         initWebDriver();
     }
 
+    @Step(shortName = "mainPageProductSticker" , followedSteps = "logout")
     @Given("I verify page product sticker$")
     public void i_verify_page_product_sticker() {
         System.out.println("--- testMainPageProductSticker ---");
@@ -30,6 +32,7 @@ public class MainPageTest extends TestBase {
         softAssert.assertAll();
     }
 
+    @Step(shortName = "productDetails" , followedSteps = "logout")
     @Then("I verify product details$")
     public void i_verify_product_details() {
         System.out.println("--- testProductDetails ---");
@@ -47,6 +50,7 @@ public class MainPageTest extends TestBase {
         Assert.assertEquals(mainPageDuck, detailsPageDuck);
     }
 
+    @Step(shortName = "productDetailsElements" , followedSteps = "logout")
     @Then("I verify product details elements")
     public void i_verify_product_details_elements() {
         System.out.println("--- testProductDetailsElements ---");
@@ -60,6 +64,7 @@ public class MainPageTest extends TestBase {
         productDetailsPage.verifyProductDetailsElements();
     }
 
+    @Step(shortName = "cartAddProduct" , followedSteps = "logout")
     @When("I add product to cart$")
     public void testCartAddProduct() {
         System.out.println("--- testCartAddProduct ---");
