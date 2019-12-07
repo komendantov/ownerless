@@ -1,0 +1,36 @@
+{
+  "methods": {
+    "0": "OpenMainPage",
+    "1": "LoginUser",
+    "2": "LogoutUser",
+    "3": "OpenCreateAccountPage",
+    "4": "FillCreateAccountFields",
+    "5": "VerifyCreateAccountSuccessMessage",
+    "6": "VerifyProductStickerIsDisplayed",
+    "7": "OpenProductDetailsPage",
+    "8": "OpenCampaignProductDetailsPage",
+    "9": "VerifyProductDetails",
+    "10": "VerifyProductDetailsPageElements",
+    "11": "AddProductToCart",
+    "12": "OpenCartPageByCheckout",
+    "13": "RemoveAllFromCart",
+    "14": "VerifyCartIsEmpty"
+  },
+  "matrix": [
+    {"0":["1","3","6","7","8","11","12"]},
+    {"1": ["2","6","7","8","12"]},
+    {"2":[]},
+    {"3":["4"]},
+    {"4":["5"]},
+    {"5":["1"]},
+    {"6":[]},
+    {"7":["9","10","11"]},
+    {"8":["9","10","11"]},
+    {"9":["11"]},
+    {"10":[]},
+    {"11":["12"]},
+    {"12":["13"]},
+    {"13":["14"]},
+    {"14":[]}
+  ]
+}
