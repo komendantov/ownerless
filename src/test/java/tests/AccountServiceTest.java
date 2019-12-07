@@ -3,6 +3,7 @@ package tests;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
+import model.Step;
 import model.User;
 import org.junit.Assert;
 import pages.BoxAccountPageBlock;
@@ -16,6 +17,7 @@ public class AccountServiceTest extends TestBase {
         initWebDriver();
     }
 
+    @Step(shortName = "login", followedSteps = "logout")
     @When("I sign in$")
     public void i_sign_in() {
         System.out.println("--- testUserLogin ---");
@@ -25,6 +27,7 @@ public class AccountServiceTest extends TestBase {
         Assert.assertTrue(boxAccountPageBlock.verifyUserLogin(user.getLogin(), user.getPassword()));
     }
 
+    @Step(shortName = "logout")
     @When("I sign out$")
     public void i_sign_out() {
         System.out.println("--- testUserLogout ---");
@@ -32,6 +35,7 @@ public class AccountServiceTest extends TestBase {
         Assert.assertTrue(boxAccountPageBlock.verifyUserLogout());
     }
 
+    @Step(shortName = "createAccount", followedSteps = "logout")
     @Given("I create account$")
     public void i_create_account() {
         System.out.println("--- testCreateAccount ---");
