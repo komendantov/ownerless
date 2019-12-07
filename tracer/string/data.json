@@ -1,0 +1,18 @@
+{
+  "start": "OpenMainPage",
+  "OpenMainPage": ["LoginUser","OpenCreateAccountPage","VerifyProductStickerIsDisplayed","OpenProductDetailsPage","OpenCampaignProductDetailsPage","AddProductToCart","OpenCartPageByCheckout"],
+    "LoginUser": ["LogoutUser","VerifyProductStickerIsDisplayed","OpenProductDetailsPage","OpenCampaignProductDetailsPage","OpenCartPageByCheckout"],
+    "LogoutUser":[],
+    "OpenCreateAccountPage":["FillCreateAccountFields"],
+    "FillCreateAccountFields":["VerifyCreateAccountSuccessMessage"],
+    "VerifyCreateAccountSuccessMessage":["LoginUser"],
+    "VerifyProductStickerIsDisplayed":[],
+    "OpenProductDetailsPage":["VerifyProductDetails","VerifyProductDetailsPageElements","AddProductToCart"],
+    "OpenCampaignProductDetailsPage":["VerifyProductDetails","VerifyProductDetailsPageElements","AddProductToCart"],
+    "VerifyProductDetails":["AddProductToCart"],
+    "VerifyProductDetailsPageElements":[],
+    "AddProductToCart":["OpenCartPageByCheckout"],
+    "OpenCartPageByCheckout":["RemoveAllFromCart"],
+    "RemoveAllFromCart":["VerifyCartIsEmpty"],
+    "VerifyCartIsEmpty":[]
+}
