@@ -57,6 +57,13 @@ public class AnnotationData {
     public void setGherkinName(String gherkinName) {
         this.gherkinName = gherkinName;
     }
+    /**
+     * Get Gherkin step name
+     * @return Gherkin name
+     */
+    public String getGherkinName() {
+        return gherkinName;
+    }
 
     /**
      * Get Gherkin keyword
