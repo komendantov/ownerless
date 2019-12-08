@@ -124,7 +124,7 @@ public class AnnotationHelper {
     public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, ParseException {
         AnnotationHelper annotationHelper = new AnnotationHelper();
         JSONObject matrix = annotationHelper.prepareStepsMatrix();
-        HashMap map = annotationHelper.prepareStepsMap();
+        HashMap<String, TestParameters> map = annotationHelper.prepareStepsMap();
 
 
         FeatureMaker.writeFeatureFiles(map);

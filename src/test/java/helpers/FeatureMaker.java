@@ -6,6 +6,7 @@ import io.cucumber.datatable.dependency.com.fasterxml.jackson.databind.ObjectMap
 import io.cucumber.datatable.dependency.com.fasterxml.jackson.databind.type.MapType;
 import io.cucumber.datatable.dependency.com.fasterxml.jackson.databind.type.TypeFactory;
 import model.FeatureFile;
+import model.TestParameters;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -40,7 +41,7 @@ public class FeatureMaker {
      *
      * @return example table
      */
-    private static FeatureFile createFeatureText(String featureName, String steps, HashMap stepsMap) {
+    private static FeatureFile createFeatureText(String featureName, String steps, HashMap<String, TestParameters> stepsMap) {
         ArrayList<String> stepsList = new ArrayList<>();
         String featureText = "";
         Pattern pattern = Pattern.compile("([a-zA-Z]+)");
@@ -48,7 +49,21 @@ public class FeatureMaker {
         while (matcher.find())
             stepsList.add(matcher.group());
         StringBuilder sb = new StringBuilder();
-        stepsList.forEach(step -> sb.append("Given ").append(stepsMap.get(step).toString().replaceAll("\\$", "")).append("\n"));
+        for (String step : stepsList) {
+            sb.append("Given ").append(stepsMap.get(step).getGherkinName().replaceAll("\\$", ""));
+            String[] testData = stepsMap.get(step).getTestData();
+            if (testData.length != 0) {
+                sb.append("\n");
+                sb.append("|");
+                for (String parameter : testData)
+                    sb.append(parameter).append("|");
+                sb.append("\n");
+                sb.append("|");
+                for (String parameter : testData)
+                    sb.append("default").append("|");
+                sb.append("\n");
+            }
+        }
         String stepsString = sb.toString();
         featureText = "@" + featureName + "\nFeature: Generated scenario\nScenario: " + featureName + "\n" +
                 stepsString + "\n";
@@ -56,7 +71,7 @@ public class FeatureMaker {
     }
 
 
-    public static void writeFeatureFiles(HashMap stepsMap) throws IOException, ParseException {
+    public static void writeFeatureFiles(HashMap<String, TestParameters> stepsMap) throws IOException, ParseException {
         StringBuilder sb = new StringBuilder();
         ArrayList<String> strings = (ArrayList) Files.readAllLines(Paths.get(ALL_FLOWS_PATH));
         strings.forEach(string -> sb.append(string));

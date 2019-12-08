@@ -20,7 +20,7 @@ public class MainPageTest extends TestBase {
         initWebDriver();
     }
 
-    @Step(shortName = "verifyProductStickerIsDisplayed")
+    @Step(shortName = "verifyProductStickerIsDisplayed", testData={"country","accountType"})
     @Given("I verify page product sticker$")
     public void i_verify_page_product_sticker() {
         System.out.println("--- testMainPageProductSticker ---");
@@ -32,7 +32,7 @@ public class MainPageTest extends TestBase {
         softAssert.assertAll();
     }
 
-    @Step(shortName = "verifyProductDetails", preconditionSteps = {"addProductToCart"})
+    @Step(shortName = "verifyProductDetails", preconditionSteps = {"addProductToCart"},  testData={"address1", "address2","address3"})
     @Then("I verify product details$")
     public void i_verify_product_details() {
         System.out.println("--- testProductDetails ---");
@@ -50,12 +50,12 @@ public class MainPageTest extends TestBase {
         Assert.assertEquals(mainPageDuck, detailsPageDuck);
     }
 
-    @Step(shortName = "openProductDetailsPage", preconditionSteps = {"verifyProductDetails", "verifyProductDetailsPageElements", "addProductToCart"})
+    @Step(shortName = "openProductDetailsPage", preconditionSteps = {"verifyProductDetails", "verifyProductDetailsPageElements", "addProductToCart"},  testData={"address1", "address2","address3"})
     @Then("I open product details page$")
     public void i_open_product_details_page() {
     }
 
-    @Step(shortName = "openCampaignProductDetailsPage", preconditionSteps = {"verifyProductDetails", "verifyProductDetailsPageElements", "addProductToCart"})
+    @Step(shortName = "openCampaignProductDetailsPage", preconditionSteps = {"verifyProductDetails", "verifyProductDetailsPageElements", "addProductToCart"},  testData={"address1", "address2","address3"})
     @When("I open campaign product details page$")
     public void i_open_campaign_product_details_page() {
 
@@ -75,7 +75,7 @@ public class MainPageTest extends TestBase {
         productDetailsPage.verifyProductDetailsElements();
     }
 
-    @Step(shortName = "addProductToCart", preconditionSteps = {"openCartPageByCheckout"})
+    @Step(shortName = "addProductToCart", preconditionSteps = {"openCartPageByCheckout"},  testData={"address1", "address2","address3"})
     @When("I add product to cart$")
     public void testCartAddProduct() {
         System.out.println("--- testCartAddProduct ---");
@@ -88,23 +88,22 @@ public class MainPageTest extends TestBase {
         }
     }
 
-    @Step(shortName = "openCartPageByCheckout", preconditionSteps = {"removeAllFromCart"})
+    @Step(shortName = "openCartPageByCheckout", preconditionSteps = {"removeAllFromCart"}, testData={"country","accountType"})
     @Then("I open cart page by checkout$")
     public void i_open_cart_page_by_checkout() {
     }
 
 
-    @Step(shortName = "removeAllFromCart", preconditionSteps = {"addProductToCart"})
+    @Step(shortName = "removeAllFromCart", preconditionSteps = {"addProductToCart"}, testData={"country","accountType"})
     @Then("I remove all from cart")
     public void i_remove_all_from_cart() {
         MainPage mainPage = new MainPage(driver);
-        // mainPage.open(BASE_URL);
         CartPage cartPage = mainPage.checkout();
         cartPage.cartRemoveAll();
         Assert.assertTrue(cartPage.cartIsEmpty());
     }
 
-    @Step(shortName = "verifyCartIsEmpty")
+    @Step(shortName = "verifyCartIsEmpty", testData={"country","accountType"})
     @Then("I verify cart is empty$")
     public void i_verify_cart_is_empty() {
         MainPage mainPage = new MainPage(driver);

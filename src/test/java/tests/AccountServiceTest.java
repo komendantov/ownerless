@@ -30,7 +30,7 @@ public class AccountServiceTest extends TestBase {
         boxAccountPageBlock = null;
     }
 
-    @Step(shortName = "login", preconditionSteps = {"logout", "verifyProductStickerIsDisplayed"})
+    @Step(shortName = "login", preconditionSteps = {"logout", "verifyProductStickerIsDisplayed"}, testData={"country","accountType"})
     @When("I sign in$")
     public void i_sign_in() {
         System.out.println("--- testUserLogin ---");
@@ -48,7 +48,7 @@ public class AccountServiceTest extends TestBase {
         Assert.assertTrue(boxAccountPageBlock.verifyUserLogout());
     }
 
-    @Step(shortName = "openCreateAccountPage", preconditionSteps = {"fillCreateAccountFields"})
+    @Step(shortName = "openCreateAccountPage", preconditionSteps = {"fillCreateAccountFields"}, testData={"country","accountType"})
     @Given("I open create account page$")
     public void i_create_account() {
         System.out.println("--- testCreateAccount ---");
@@ -56,7 +56,7 @@ public class AccountServiceTest extends TestBase {
         createAccountPage.open(BASE_URL);
     }
 
-    @Step(shortName = "fillCreateAccountFields", preconditionSteps = {"loginWithCreatedAccount"})
+    @Step(shortName = "fillCreateAccountFields", preconditionSteps = {"loginWithCreatedAccount"}, testData={"country","accountType"})
     @Then("I fill account fields$")
     public void i_fill_account_fields() {
         user = new User();
@@ -68,13 +68,13 @@ public class AccountServiceTest extends TestBase {
         Assert.assertTrue(boxAccountPageBlock.verifyUserLogout());
     }
 
-    @Step(shortName = "verifyCreateAccountSuccessMessage", preconditionSteps = {"openMainPage"}, testData={"country,accountType"})
+    @Step(shortName = "verifyCreateAccountSuccessMessage", preconditionSteps = {"openMainPage"}, testData={"country","accountType"})
     @Then("I verify create account success message")
     public static void i_verify_create_account_success_message(){
 
     }
 
-    @Step(shortName = "loginWithCreatedAccount", preconditionSteps = {"verifyProductStickerIsDisplayed", "verifyProductDetailsPageElements"})
+    @Step(shortName = "loginWithCreatedAccount", preconditionSteps = {"verifyProductStickerIsDisplayed", "verifyProductDetailsPageElements"}, testData={"country","accountType"})
     @Then("I login with created account$")
     public void i_login_with_created_account() {
         Assert.assertTrue(boxAccountPageBlock.verifyUserLogin(user.getLogin(), user.getPassword()));
