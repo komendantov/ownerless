@@ -68,6 +68,12 @@ public class AccountServiceTest extends TestBase {
         Assert.assertTrue(boxAccountPageBlock.verifyUserLogout());
     }
 
+    @Step(shortName = "verifyCreateAccountSuccessMessage", preconditionSteps = {"openMainPage"})
+    @Then("I verify create account success message")
+    public static void i_verify_create_account_success_message(){
+
+    }
+
     @Step(shortName = "loginWithCreatedAccount", preconditionSteps = {"verifyProductStickerIsDisplayed", "verifyProductDetailsPageElements"})
     @Then("I login with created account$")
     public void i_login_with_created_account() {

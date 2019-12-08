@@ -32,7 +32,7 @@ public class MainPageTest extends TestBase {
         softAssert.assertAll();
     }
 
-    @Step(shortName = "verifyProductDetails", preconditionSteps = {"addProductToCart", "login"})
+    @Step(shortName = "verifyProductDetails", preconditionSteps = {"addProductToCart"})
     @Then("I verify product details$")
     public void i_verify_product_details() {
         System.out.println("--- testProductDetails ---");
@@ -50,6 +50,17 @@ public class MainPageTest extends TestBase {
         Assert.assertEquals(mainPageDuck, detailsPageDuck);
     }
 
+    @Step(shortName = "openProductDetailsPage", preconditionSteps = {"verifyProductDetails", "verifyProductDetailsPageElements", "addProductToCart"})
+    @Then("I open product details page$")
+    public void i_open_product_details_page() {
+    }
+
+    @Step(shortName = "openCampaignProductDetailsPage", preconditionSteps = {"verifyProductDetails", "verifyProductDetailsPageElements", "addProductToCart"})
+    @When("I open campaign product details page$")
+    public void i_open_campaign_product_details_page() {
+
+    }
+
     @Step(shortName = "verifyProductDetailsPageElements")
     @Then("I verify product details elements")
     public void i_verify_product_details_elements() {
@@ -64,7 +75,7 @@ public class MainPageTest extends TestBase {
         productDetailsPage.verifyProductDetailsElements();
     }
 
-    @Step(shortName = "addProductToCart")
+    @Step(shortName = "addProductToCart", preconditionSteps = {"openCartPageByCheckout"})
     @When("I add product to cart$")
     public void testCartAddProduct() {
         System.out.println("--- testCartAddProduct ---");
@@ -77,13 +88,27 @@ public class MainPageTest extends TestBase {
         }
     }
 
+    @Step(shortName = "openCartPageByCheckout", preconditionSteps = {"removeAllFromCart"})
+    @Then("I open cart page by checkout$")
+    public void i_open_cart_page_by_checkout() {
+    }
+
+
     @Step(shortName = "removeAllFromCart", preconditionSteps = {"addProductToCart"})
     @Then("I remove all from cart")
     public void i_remove_all_from_cart() {
         MainPage mainPage = new MainPage(driver);
-       // mainPage.open(BASE_URL);
+        // mainPage.open(BASE_URL);
         CartPage cartPage = mainPage.checkout();
         cartPage.cartRemoveAll();
+        Assert.assertTrue(cartPage.cartIsEmpty());
+    }
+
+    @Step(shortName = "verifyCartIsEmpty")
+    @Then("I verify cart is empty$")
+    public void i_verify_cart_is_empty() {
+        MainPage mainPage = new MainPage(driver);
+        CartPage cartPage = mainPage.checkout();
         Assert.assertTrue(cartPage.cartIsEmpty());
     }
 }
