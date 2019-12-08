@@ -8,10 +8,12 @@ import io.cucumber.java.en.When;
 import model.Step;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -47,22 +49,6 @@ public class AnnotationHelper {
         return reflections.getMethodsAnnotatedWith(annotation);
     }
 
-    /**
-     * Checking whether the Cucumber annotation is an annotation.
-     *
-     * @param annotation
-     * @return is it cucumber annotation
-     */
-    private static boolean isCucumberAnnotation(Annotation annotation) {
-        List<Class> gherkinClasses = new ArrayList<>();
-        Collections.addAll(gherkinClasses, Given.class, When.class, And.class, Then.class, But.class);
-        return gherkinClasses.contains(annotation.annotationType());
-    }
-
-    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        System.out.println(new AnnotationHelper().prepareStepsMatrix());
-        System.out.println(new AnnotationHelper().prepareStepsMap());
-    }
 
     public JSONObject prepareStepsMatrix() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Set<Method> methods = giveAllAnnotatedMethods("tests", Step.class);
@@ -112,5 +98,24 @@ public class AnnotationHelper {
             stepsMap.put(annotatedStep.getShortName(), annotatedStep.getGherkinName());
         }
         return stepsMap;
+    }
+
+    /**
+     * Checking whether the Cucumber annotation is an annotation.
+     *
+     * @param annotation
+     * @return is it cucumber annotation
+     */
+    private static boolean isCucumberAnnotation(Annotation annotation) {
+        List<Class> gherkinClasses = new ArrayList<>();
+        Collections.addAll(gherkinClasses, Given.class, When.class, And.class, Then.class, But.class);
+        return gherkinClasses.contains(annotation.annotationType());
+    }
+
+    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, ParseException {
+       AnnotationHelper annotationHelper =  new AnnotationHelper();
+       JSONObject matrix = annotationHelper.prepareStepsMatrix();
+        HashMap map = annotationHelper.prepareStepsMap();
+        FeatureMaker.writeFeatureFiles(matrix, map);
     }
 }

@@ -32,7 +32,7 @@ public class MainPageTest extends TestBase {
         softAssert.assertAll();
     }
 
-    @Step(shortName = "verifyProductDetails", preconditionSteps = {"addProductToCart"})
+    @Step(shortName = "verifyProductDetails", preconditionSteps = {"addProductToCart", "login"})
     @Then("I verify product details$")
     public void i_verify_product_details() {
         System.out.println("--- testProductDetails ---");
