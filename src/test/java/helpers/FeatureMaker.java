@@ -42,6 +42,7 @@ public class FeatureMaker {
         StringBuilder sb = new StringBuilder();
         for (String step : stepsList) {
             sb.append("Given ").append(stepsMap.get(step).getGherkinName().replaceAll("\\$", ""));
+            sb.append("\n");
             String[] testData = stepsMap.get(step).getTestData();
             if (testData.length != 0) {
                 sb.append("\n");
@@ -56,7 +57,7 @@ public class FeatureMaker {
             }
         }
         String stepsString = sb.toString();
-        featureText = "@" + featureName.replaceAll(" ", "") + "\nFeature: Generated scenario\nScenario: " + featureName + "\n" +
+        featureText = "@allTests @" + featureName.replaceAll(" ", "") + "\nFeature: Generated scenario\nScenario: " + featureName + "\n" +
                 stepsString + "\n";
         return new FeatureFile(featureName, featureText);
     }

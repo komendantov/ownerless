@@ -1,6 +1,7 @@
 package tests;
 
 import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import model.Step;
 
@@ -16,9 +17,9 @@ public class OpenPageTest extends TestBase {
     @Step(shortName = "openMainPage", preconditionSteps = {"login", "openCreateAccountPage", "verifyProductStickerIsDisplayed", "openProductDetailsPage", "openCampaignProductDetailsPage",
     "addProductToCart", "openCartPageByCheckout"
     },isStartNode = true)
-    @When("I create my first test")
+    @Given("I create my first test")
     public void i_create_my_first_test() {
-        driver.navigate().to("http://192.168.36.254/litecart");
+        driver.navigate().to("http://192.168.36.242/litecart");
         wait.until(titleIs("Online Store | My Store"));
     }
 }

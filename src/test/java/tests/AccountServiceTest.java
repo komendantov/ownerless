@@ -1,5 +1,7 @@
 package tests;
 
+
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -31,8 +33,8 @@ public class AccountServiceTest extends TestBase {
     }
 
     @Step(shortName = "login", preconditionSteps = {"logout", "verifyProductStickerIsDisplayed"}, testData={"country","accountType"})
-    @When("I sign in$")
-    public void i_sign_in() {
+    @Given("I sign in$")
+    public void i_sign_in(DataTable dataTable) {
         System.out.println("--- testUserLogin ---");
         User user = new User("user123@example.com", "qwe123");
         BoxAccountPageBlock boxAccountPageBlock = new BoxAccountPageBlock(driver);
@@ -41,7 +43,7 @@ public class AccountServiceTest extends TestBase {
     }
 
     @Step(shortName = "logout")
-    @When("I sign out$")
+    @Given("I sign out$")
     public void i_sign_out() {
         System.out.println("--- testUserLogout ---");
         BoxAccountPageBlock boxAccountPageBlock = new BoxAccountPageBlock(driver);
@@ -50,15 +52,15 @@ public class AccountServiceTest extends TestBase {
 
     @Step(shortName = "openCreateAccountPage", preconditionSteps = {"fillCreateAccountFields"}, testData={"country","accountType"})
     @Given("I open create account page$")
-    public void i_create_account() {
+    public void i_create_account(DataTable dataTable) {
         System.out.println("--- testCreateAccount ---");
         createAccountPage = new CreateAccountPage(driver);
         createAccountPage.open(BASE_URL);
     }
 
     @Step(shortName = "fillCreateAccountFields", preconditionSteps = {"loginWithCreatedAccount"}, testData={"country","accountType"})
-    @Then("I fill account fields$")
-    public void i_fill_account_fields() {
+    @Given("I fill account fields$")
+    public void i_fill_account_fields(DataTable dataTable) {
         user = new User();
         System.out.println(user.getLogin() + " " + user.getPassword());
         createAccountPage = new CreateAccountPage(driver);
@@ -69,14 +71,14 @@ public class AccountServiceTest extends TestBase {
     }
 
     @Step(shortName = "verifyCreateAccountSuccessMessage", preconditionSteps = {"openMainPage"}, testData={"country","accountType"})
-    @Then("I verify create account success message")
-    public static void i_verify_create_account_success_message(){
+    @Given("I verify create account success message")
+    public static void i_verify_create_account_success_message(DataTable dataTable){
 
     }
 
     @Step(shortName = "loginWithCreatedAccount", preconditionSteps = {"verifyProductStickerIsDisplayed", "verifyProductDetailsPageElements"}, testData={"country","accountType"})
-    @Then("I login with created account$")
-    public void i_login_with_created_account() {
+    @Given("I login with created account$")
+    public void i_login_with_created_account(DataTable dataTable) {
         Assert.assertTrue(boxAccountPageBlock.verifyUserLogin(user.getLogin(), user.getPassword()));
         Assert.assertTrue(boxAccountPageBlock.verifyUserLogout());
     }

@@ -70,14 +70,14 @@ public class AdministrationPanelTest extends TestBase {
         Assert.assertTrue(driver.findElement(By.xpath(LOGOUT_LOCATOR)).isDisplayed());
     }
 
-    @Then("I logout as admin$")
+    @Given("I logout as admin$")
     public void i_logout_as_admin() {
         System.out.println("--- testAdminPageLogout ---");
         driver.findElement(By.xpath(LOGOUT_LOCATOR)).click();
         Assert.assertTrue(driver.findElement(By.name("login")).isDisplayed());
     }
 
-    @Then("I verify page box app menu$")
+    @Given("I verify page box app menu$")
     public void i_verify_page_box_app_menu() {
         System.out.println("--- testAdminPageBoxAppMenu ---");
         List<WebElement> liAppMenus = (driver.findElements(By.id("app-")));
@@ -99,14 +99,14 @@ public class AdministrationPanelTest extends TestBase {
         }
     }
 
-    @Then("I verify countries sorting$")
+    @Given("I verify countries sorting$")
     public void testCountriesSorting() {
         System.out.println("--- testCountriesSorting ---");
         driver.navigate().to(COUNTRY_PAGE_URL);
         verifyCountryNamesSorting(COUNTRY_NAME_LOCATOR);
     }
 
-    @And("I verify country zones sorting$")
+    @Given("I verify country zones sorting$")
     public void testCountryZonesSorting() {
         System.out.println("--- testCountriesSorting ---");
         driver.navigate().to(COUNTRY_PAGE_URL);
@@ -130,7 +130,7 @@ public class AdministrationPanelTest extends TestBase {
         }
     }
 
-    @And("I verify geo zones sorting$")
+    @Given("I verify geo zones sorting$")
     public void testGeoZonesSorting() {
         System.out.println("--- testGeoZonesSorting ---");
         driver.navigate().to(GEOZONES_URL);
@@ -152,7 +152,7 @@ public class AdministrationPanelTest extends TestBase {
         }
     }
 
-    @And("I verify edit country page external links$")
+    @Given("I verify edit country page external links$")
     public void testEditCountryPageExternalLinks() {
         System.out.println("--- testEditCountryPageExternalLinks ---");
         driver.navigate().to(COUNTRY_PAGE_URL);
@@ -177,7 +177,7 @@ public class AdministrationPanelTest extends TestBase {
         }
     }
 
-    @Then("I add a new product$")
+    @Given("I add a new product$")
     public void i_add_a_new_product() {
         System.out.println("--- testAddNewProduct ---");
         Product duck = new Product(
@@ -233,7 +233,7 @@ public class AdministrationPanelTest extends TestBase {
         Assert.assertTrue(driver.findElement(By.xpath("//a[text()[contains(.,'" + duck.getName() + "')]]")).isDisplayed());
     }
 
-    @Then("I verify admin panel console log$")
+    @Given("I verify admin panel console log$")
     public void i_verify_admin_panel_console_log() {
         SoftAssertions softAssert = new SoftAssertions();
         //  testAdminPageLogin();
