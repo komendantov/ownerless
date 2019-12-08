@@ -6,6 +6,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import model.Step;
+import model.TestParameters;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -32,7 +33,6 @@ import java.util.Set;
  * Class for searching annotated methods.
  */
 public class AnnotationHelper {
-    private static String ALL_FLOWS_PATH = System.getProperty("user.dir") + "\\src\\test\\resources\\testflows\\all_flows.json";
 
 
     private AnnotationHelper() {
@@ -74,8 +74,8 @@ public class AnnotationHelper {
         return new JSONObject(annotationMap);
     }
 
-    public HashMap<String, String> prepareStepsMap() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        HashMap<String, String> stepsMap = new HashMap<>();
+    public HashMap<String, TestParameters> prepareStepsMap() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        HashMap<String, TestParameters> stepsMap = new HashMap<>();
         Set<Method> methods = new HashSet<>();
 
         methods.addAll(AnnotationHelper.giveAllAnnotatedMethods("tests", Step.class));
@@ -92,14 +92,19 @@ public class AnnotationHelper {
         for (Annotation[] annotations : gherkinAnnotations) {
             AnnotationData annotatedStep = new AnnotationData();
             for (Annotation annotation : annotations) {
-                if (annotation.annotationType() == Step.class)
+                if (annotation.annotationType() == Step.class) {
                     annotatedStep.setShortName((String) annotation.annotationType().getDeclaredMethod("shortName").invoke(annotation));
+                    try {
+                        annotatedStep.setTestData((String[]) annotation.annotationType().getDeclaredMethod("testData").invoke(annotation));
+                    } catch (NoSuchMethodException ignored) {
+                    }
+                }
                 if (AnnotationHelper.isCucumberAnnotation(annotation)) {
                     annotatedStep.setGherkinKeyword(annotation.annotationType().getSimpleName());
                     annotatedStep.setGherkinName((String) annotation.annotationType().getDeclaredMethod("value").invoke(annotation));
                 }
             }
-            stepsMap.put(annotatedStep.getShortName(), annotatedStep.getGherkinName());
+            stepsMap.put(annotatedStep.getShortName(), new TestParameters(annotatedStep.getGherkinName(), annotatedStep.getTestData()));
         }
         return stepsMap;
     }
@@ -117,12 +122,11 @@ public class AnnotationHelper {
     }
 
     public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, ParseException {
-       AnnotationHelper annotationHelper =  new AnnotationHelper();
-       JSONObject matrix = annotationHelper.prepareStepsMatrix();
+        AnnotationHelper annotationHelper = new AnnotationHelper();
+        JSONObject matrix = annotationHelper.prepareStepsMatrix();
         HashMap map = annotationHelper.prepareStepsMap();
-        StringBuilder sb = new StringBuilder();
-        ArrayList<String> strings = (ArrayList) Files.readAllLines(Paths.get(ALL_FLOWS_PATH));
-        strings.forEach(string  -> sb.append(string));
-        FeatureMaker.writeFeatureFiles(sb.toString(), map);
+
+
+        FeatureMaker.writeFeatureFiles(map);
     }
 }

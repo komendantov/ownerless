@@ -1,7 +1,11 @@
 package helpers;
 
 
+import java.util.ArrayList;
+
 public class AnnotationData {
+
+    private String[] testData;
 
     public AnnotationData() {
     }
@@ -14,6 +18,10 @@ public class AnnotationData {
     private String[] preconditionSteps;
     // name on Gherkin language (e.g. "^I create a Korean account$")
     private String gherkinName;
+
+    public String[] getTestData() {
+        return testData;
+    }
 
     /**
      * Get short step name
@@ -30,7 +38,13 @@ public class AnnotationData {
     public void setShortName(String shortName) {
         this.shortName = shortName;
     }
-
+    /**
+     * Set testData
+     * @param testData testData
+     */
+    public void setTestData(String[] testData) {
+        this.testData = testData;
+    }
     /**
      * Get step parameters
      * @return step parameters

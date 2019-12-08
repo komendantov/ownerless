@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -30,6 +32,7 @@ import java.util.regex.Pattern;
 public class FeatureMaker {
 
     private static String FEATURE_FILES_PATH = System.getProperty("user.dir") + "\\src\\test\\resources\\features\\";
+    private static String ALL_FLOWS_PATH = System.getProperty("user.dir") + "\\src\\test\\resources\\testflows\\all_flows.json";
 
 
     /**
@@ -53,9 +56,12 @@ public class FeatureMaker {
     }
 
 
-    public static void writeFeatureFiles(String scenarios, HashMap stepsMap) throws IOException, ParseException {
+    public static void writeFeatureFiles(HashMap stepsMap) throws IOException, ParseException {
+        StringBuilder sb = new StringBuilder();
+        ArrayList<String> strings = (ArrayList) Files.readAllLines(Paths.get(ALL_FLOWS_PATH));
+        strings.forEach(string -> sb.append(string));
         JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) jsonParser.parse(scenarios);
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(sb.toString());
         for (Object scenario : jsonObject.entrySet()) {
             Map.Entry entry = (Map.Entry) scenario;
             FeatureFile file = createFeatureText(entry.getKey().toString(), entry.getValue().toString(), stepsMap);
