@@ -1,8 +1,6 @@
 package helpers;
 
 
-import org.apache.commons.lang3.ArrayUtils;
-
 public class AnnotationData {
 
     public AnnotationData() {
@@ -13,7 +11,7 @@ public class AnnotationData {
     // Pretty short step name (e.g. "createAccount")
     private String shortName;
     //parameters from annotation
-    private String[] followedSteps;
+    private String[] preconditionSteps;
     // name on Gherkin language (e.g. "^I create a Korean account$")
     private String gherkinName;
 
@@ -37,16 +35,16 @@ public class AnnotationData {
      * Get step parameters
      * @return step parameters
      */
-    public String[] getFollowedSteps() {
-        return followedSteps;
+    public String[] getPreconditionSteps() {
+        return preconditionSteps;
     }
 
     /**
      * Set step parameters
-     * @param followedSteps step parameters
+     * @param preconditionSteps step parameters
      */
-    public void setFollowedSteps(String[] followedSteps) {
-        this.followedSteps = followedSteps;
+    public void setPreconditionSteps(String[] preconditionSteps) {
+        this.preconditionSteps = preconditionSteps;
     }
 
 
