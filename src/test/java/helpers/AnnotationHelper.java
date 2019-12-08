@@ -99,7 +99,7 @@ public class AnnotationHelper {
         StringBuilder sb = new StringBuilder();
         ArrayList<String> strings = (ArrayList) Files.readAllLines(Paths.get(ALL_FLOWS_PATH));
         strings.forEach(string -> sb.append(string));
-        FeatureMaker.writeFeatureFiles(sb.toString(), map);
+        FeatureMaker.writeFeatureFiles(map);
     }
 
     public JSONObject prepareStepsMatrix() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
@@ -165,24 +165,4 @@ public class AnnotationHelper {
         return stepsMap;
     }
 
-    /**
-     * Checking whether the Cucumber annotation is an annotation.
-     *
-     * @param annotation
-     * @return is it cucumber annotation
-     */
-    private static boolean isCucumberAnnotation(Annotation annotation) {
-        List<Class> gherkinClasses = new ArrayList<>();
-        Collections.addAll(gherkinClasses, Given.class, When.class, And.class, Then.class, But.class);
-        return gherkinClasses.contains(annotation.annotationType());
-    }
-
-    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, ParseException {
-        AnnotationHelper annotationHelper = new AnnotationHelper();
-        JSONObject matrix = annotationHelper.prepareStepsMatrix();
-        HashMap<String, TestParameters> map = annotationHelper.prepareStepsMap();
-
-
-        FeatureMaker.writeFeatureFiles(map);
-    }
 }
