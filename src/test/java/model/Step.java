@@ -11,4 +11,5 @@ public @interface Step {
     String shortName();
     String[] preconditionSteps() default {};
     boolean isStartNode() default false;
+    String[] testData() default {};
 }

@@ -6,6 +6,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import model.Step;
+import model.TestParameters;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -129,8 +130,8 @@ public class AnnotationHelper {
         return jsonObject;
     }
 
-    public HashMap<String, String> prepareStepsMap() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        HashMap<String, String> stepsMap = new HashMap<>();
+    public HashMap<String, TestParameters> prepareStepsMap() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        HashMap<String, TestParameters> stepsMap = new HashMap<>();
         Set<Method> methods = new HashSet<>();
 
         methods.addAll(AnnotationHelper.giveAllAnnotatedMethods("tests", Step.class));
@@ -147,15 +148,41 @@ public class AnnotationHelper {
         for (Annotation[] annotations : gherkinAnnotations) {
             AnnotationData annotatedStep = new AnnotationData();
             for (Annotation annotation : annotations) {
-                if (annotation.annotationType() == Step.class)
+                if (annotation.annotationType() == Step.class) {
                     annotatedStep.setShortName((String) annotation.annotationType().getDeclaredMethod("shortName").invoke(annotation));
+                    try {
+                        annotatedStep.setTestData((String[]) annotation.annotationType().getDeclaredMethod("testData").invoke(annotation));
+                    } catch (NoSuchMethodException ignored) {
+                    }
+                }
                 if (AnnotationHelper.isCucumberAnnotation(annotation)) {
                     annotatedStep.setGherkinKeyword(annotation.annotationType().getSimpleName());
                     annotatedStep.setGherkinName((String) annotation.annotationType().getDeclaredMethod("value").invoke(annotation));
                 }
             }
-            stepsMap.put(annotatedStep.getShortName(), annotatedStep.getGherkinName());
+            stepsMap.put(annotatedStep.getShortName(), new TestParameters(annotatedStep.getGherkinName(), annotatedStep.getTestData()));
         }
         return stepsMap;
+    }
+
+    /**
+     * Checking whether the Cucumber annotation is an annotation.
+     *
+     * @param annotation
+     * @return is it cucumber annotation
+     */
+    private static boolean isCucumberAnnotation(Annotation annotation) {
+        List<Class> gherkinClasses = new ArrayList<>();
+        Collections.addAll(gherkinClasses, Given.class, When.class, And.class, Then.class, But.class);
+        return gherkinClasses.contains(annotation.annotationType());
+    }
+
+    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, ParseException {
+        AnnotationHelper annotationHelper = new AnnotationHelper();
+        JSONObject matrix = annotationHelper.prepareStepsMatrix();
+        HashMap<String, TestParameters> map = annotationHelper.prepareStepsMap();
+
+
+        FeatureMaker.writeFeatureFiles(map);
     }
 }
