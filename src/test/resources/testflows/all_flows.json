@@ -1,67 +1,67 @@
 {
-  "OpenMainPage -> LoginUser": [
-    "OpenMainPage",
-    "LoginUser"
+  "openMainPage -> loginUser": [
+    "openMainPage",
+    "loginUser"
   ],
-  "OpenMainPage -> LogoutUser": [
-    "OpenMainPage",
-    "LoginUser",
-    "LogoutUser"
+  "openMainPage -> logoutUser": [
+    "openMainPage",
+    "loginUser",
+    "logoutUser"
   ],
-  "OpenMainPage -> OpenCreateAccountPage": [
-    "OpenMainPage",
-    "OpenCreateAccountPage"
+  "openMainPage -> openCreateAccountPage": [
+    "openMainPage",
+    "openCreateAccountPage"
   ],
-  "OpenMainPage -> FillCreateAccountFields": [
-    "OpenMainPage",
-    "OpenCreateAccountPage",
-    "FillCreateAccountFields"
+  "openMainPage -> fillCreateAccountFields": [
+    "openMainPage",
+    "openCreateAccountPage",
+    "fillCreateAccountFields"
   ],
-  "OpenMainPage -> VerifyCreateAccountSuccessMessage": [
-    "OpenMainPage",
-    "OpenCreateAccountPage",
-    "FillCreateAccountFields",
-    "VerifyCreateAccountSuccessMessage"
+  "openMainPage -> verifyCreateAccountSuccessMessage": [
+    "openMainPage",
+    "openCreateAccountPage",
+    "fillCreateAccountFields",
+    "verifyCreateAccountSuccessMessage"
   ],
-  "OpenMainPage -> VerifyProductStickerIsDisplayed": [
-    "OpenMainPage",
-    "VerifyProductStickerIsDisplayed"
+  "openMainPage -> verifyProductStickerIsDisplayed": [
+    "openMainPage",
+    "verifyProductStickerIsDisplayed"
   ],
-  "OpenMainPage -> OpenProductDetailsPage": [
-    "OpenMainPage",
-    "OpenProductDetailsPage"
+  "openMainPage -> openProductDetailsPage": [
+    "openMainPage",
+    "openProductDetailsPage"
   ],
-  "OpenMainPage -> OpenCampaignProductDetailsPage": [
-    "OpenMainPage",
-    "OpenCampaignProductDetailsPage"
+  "openMainPage -> openCampaignProductDetailsPage": [
+    "openMainPage",
+    "openCampaignProductDetailsPage"
   ],
-  "OpenMainPage -> VerifyProductDetails": [
-    "OpenMainPage",
-    "OpenProductDetailsPage",
-    "VerifyProductDetails"
+  "openMainPage -> verifyProductDetails": [
+    "openMainPage",
+    "openProductDetailsPage",
+    "verifyProductDetails"
   ],
-  "OpenMainPage -> VerifyProductDetailsPageElements": [
-    "OpenMainPage",
-    "OpenProductDetailsPage",
-    "VerifyProductDetailsPageElements"
+  "openMainPage -> verifyProductDetailsPageElements": [
+    "openMainPage",
+    "openProductDetailsPage",
+    "verifyProductDetailsPageElements"
   ],
-  "OpenMainPage -> AddProductToCart": [
-    "OpenMainPage",
-    "AddProductToCart"
+  "openMainPage -> AddProductToCart": [
+    "openMainPage",
+    "addProductToCart"
   ],
-  "OpenMainPage -> OpenCartPageByCheckout": [
-    "OpenMainPage",
-    "OpenCartPageByCheckout"
+  "openMainPage -> openCartPageByCheckout": [
+    "openMainPage",
+    "openCartPageByCheckout"
   ],
-  "OpenMainPage -> RemoveAllFromCart": [
-    "OpenMainPage",
-    "OpenCartPageByCheckout",
-    "RemoveAllFromCart"
+  "openMainPage -> removeAllFromCart": [
+    "openMainPage",
+    "openCartPageByCheckout",
+    "removeAllFromCart"
   ],
-  "OpenMainPage -> VerifyCartIsEmpty": [
-    "OpenMainPage",
-    "OpenCartPageByCheckout",
-    "RemoveAllFromCart",
-    "VerifyCartIsEmpty"
+  "openMainPage -> verifyCartIsEmpty": [
+    "openMainPage",
+    "openCartPageByCheckout",
+    "removeAllFromCart",
+    "verifyCartIsEmpty"
   ]
 }
