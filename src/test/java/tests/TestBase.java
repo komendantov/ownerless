@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TestBase {
 
-    public static final String BASE_URL = "http://192.168.36.253/litecart";
+    public static final String BASE_URL = "http://192.168.36.254/litecart";
     public static ThreadLocal<EventFiringWebDriver> tlDriver = new ThreadLocal<>();
     public EventFiringWebDriver driver;
     public WebDriverWait wait;

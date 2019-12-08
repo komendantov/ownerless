@@ -16,7 +16,7 @@ public class OpenPageTest extends TestBase {
     @Step(shortName = "openMainPage")
     @When("I create my first test")
     public void i_create_my_first_test() {
-        driver.navigate().to("http://www.google.com");
-        wait.until(titleIs("Google"));
+        driver.navigate().to("http://192.168.36.254/litecart");
+        wait.until(titleIs("Online Store | My Store"));
     }
 }
