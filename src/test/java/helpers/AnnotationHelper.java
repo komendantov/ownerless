@@ -80,12 +80,11 @@ public class AnnotationHelper {
         FileWriter fw = new FileWriter(dataJsonFile);
         fw.write(matrix.toString());
         fw.close();
-        String command = "cd " + System.getProperty("user.dir") + " tracer && python main.py";
+        String command = "cd tracer\\string && python main.py";
         ProcessBuilder builder = new ProcessBuilder();
         builder.command("cmd.exe", "/c", command);
         Process process;
         process = builder.start();
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
         String line;
