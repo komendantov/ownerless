@@ -1,0 +1,4 @@
+@verifyProductDetailsPageElements
+Feature: Generated scenario
+Scenario: verifyProductDetailsPageElements
+

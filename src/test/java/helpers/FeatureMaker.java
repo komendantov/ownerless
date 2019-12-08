@@ -45,7 +45,7 @@ public class FeatureMaker {
         while (matcher.find())
             stepsList.add(matcher.group());
         StringBuilder sb = new StringBuilder();
-            stepsList.forEach(step -> sb.append("Given ").append(stepsMap.get(step).toString().replaceAll("\\$", "")).append("\n"));
+        stepsList.forEach(step -> sb.append("Given ").append(stepsMap.get(step).toString().replaceAll("\\$", "")).append("\n"));
         String stepsString = sb.toString();
         featureText = "@" + featureName + "\nFeature: Generated scenario\nScenario: " + featureName + "\n" +
                 stepsString + "\n";

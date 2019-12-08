@@ -1,0 +1,4 @@
+@verifyProductStickerIsDisplayed
+Feature: Generated scenario
+Scenario: verifyProductStickerIsDisplayed
+

@@ -30,7 +30,7 @@ public class AccountServiceTest extends TestBase {
         boxAccountPageBlock = null;
     }
 
-    @Step(shortName = "login", preconditionSteps = {"logout", "verifyProductStickerIsDisplayed", "openProductDetailsPage", "openCampaignProductDetailsPage", "openCartPageByCheckout"})
+    @Step(shortName = "login", preconditionSteps = {"logout", "verifyProductStickerIsDisplayed"})
     @When("I sign in$")
     public void i_sign_in() {
         System.out.println("--- testUserLogin ---");
@@ -68,7 +68,7 @@ public class AccountServiceTest extends TestBase {
         Assert.assertTrue(boxAccountPageBlock.verifyUserLogout());
     }
 
-    @Step(shortName = "loginWithCreatedAccount", preconditionSteps = {"verifyProductStickerIsDisplayed", "verifyProductDetailsPageElements", "openCampaignProductDetailsPage", "openCartPageByCheckout"})
+    @Step(shortName = "loginWithCreatedAccount", preconditionSteps = {"verifyProductStickerIsDisplayed", "verifyProductDetailsPageElements"})
     @Then("I login with created account$")
     public void i_login_with_created_account() {
         Assert.assertTrue(boxAccountPageBlock.verifyUserLogin(user.getLogin(), user.getPassword()));
