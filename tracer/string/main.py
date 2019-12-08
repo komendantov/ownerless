@@ -39,7 +39,7 @@ for end_key in data:
     if end_key == data["start"] or end_key == "start":
         continue
     end_ways = []
-    all_ways[data["start"] + " -> " + end_key] = find_min_way(find_ways([data["start"]], end_key, end_ways))
+    all_ways[data["start"] + " to " + end_key] = find_min_way(find_ways([data["start"]], end_key, end_ways))
 
 with open("ways.json", "w") as output:
     output.write(json.dumps(all_ways))
