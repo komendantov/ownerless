@@ -1,13 +1,8 @@
 package helpers;
 
 
-import io.cucumber.datatable.dependency.com.fasterxml.jackson.core.JsonParser;
-import io.cucumber.datatable.dependency.com.fasterxml.jackson.databind.ObjectMapper;
-import io.cucumber.datatable.dependency.com.fasterxml.jackson.databind.type.MapType;
-import io.cucumber.datatable.dependency.com.fasterxml.jackson.databind.type.TypeFactory;
 import model.FeatureFile;
 import model.TestParameters;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -15,14 +10,10 @@ import org.json.simple.parser.ParseException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -65,7 +56,7 @@ public class FeatureMaker {
             }
         }
         String stepsString = sb.toString();
-        featureText = "@" + featureName + "\nFeature: Generated scenario\nScenario: " + featureName + "\n" +
+        featureText = "@" + featureName.replaceAll(" ", "") + "\nFeature: Generated scenario\nScenario: " + featureName + "\n" +
                 stepsString + "\n";
         return new FeatureFile(featureName, featureText);
     }
@@ -81,11 +72,10 @@ public class FeatureMaker {
             try {
 
 
-            Map.Entry entry = (Map.Entry) scenario;
-            FeatureFile file = createFeatureText(entry.getKey().toString(), entry.getValue().toString(), stepsMap);
-            writeToFile(file);
-            }
-            catch (Exception e){
+                Map.Entry entry = (Map.Entry) scenario;
+                FeatureFile file = createFeatureText(entry.getKey().toString(), entry.getValue().toString(), stepsMap);
+                writeToFile(file);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
