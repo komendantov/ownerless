@@ -57,9 +57,16 @@ public class FeatureMaker {
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(scenarios);
         for (Object scenario : jsonObject.entrySet()) {
+            try {
+
+
             Map.Entry entry = (Map.Entry) scenario;
             FeatureFile file = createFeatureText(entry.getKey().toString(), entry.getValue().toString(), stepsMap);
             writeToFile(file);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 

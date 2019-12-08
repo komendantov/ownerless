@@ -36,7 +36,7 @@ import java.util.Set;
  * Class for searching annotated methods.
  */
 public class AnnotationHelper {
-    private static String ALL_FLOWS_PATH = System.getProperty("user.dir") + "\\src\\test\\resources\\testflows\\all_flows.json";
+    private static String ALL_FLOWS_PATH = System.getProperty("user.dir") + "\\tracer\\string\\ways.json";
     private static String DATA_JSON_PATH = System.getProperty("user.dir") + "\\tracer\\string\\data.json";
 
     private AnnotationHelper() {
