@@ -15,6 +15,16 @@ public class AnnotationData {
     // name on Gherkin language (e.g. "^I create a Korean account$")
     private String gherkinName;
 
+    public boolean isStartNode() {
+        return isStartNode;
+    }
+
+    public void setStartNode(boolean startNode) {
+        isStartNode = startNode;
+    }
+
+    boolean isStartNode;
+
     /**
      * Get short step name
      * @return short step name
@@ -22,6 +32,7 @@ public class AnnotationData {
     public String getShortName() {
         return shortName;
     }
+
 
     /**
      * Set short step name
@@ -78,6 +89,7 @@ public class AnnotationData {
     public void setGherkinKeyword(String gherkinKeyword) {
         this.gherkinKeyword = gherkinKeyword;
     }
+
 
 
 }

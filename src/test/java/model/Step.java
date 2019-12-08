@@ -10,4 +10,5 @@ import java.lang.annotation.Target;
 public @interface Step {
     String shortName();
     String[] preconditionSteps() default {};
+    boolean isStartNode() default false;
 }

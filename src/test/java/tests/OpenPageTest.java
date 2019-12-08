@@ -13,7 +13,7 @@ public class OpenPageTest extends TestBase {
         initWebDriver();
     }
 
-    @Step(shortName = "openMainPage")
+    @Step(shortName = "openMainPage", isStartNode = true)
     @When("I create my first test")
     public void i_create_my_first_test() {
         driver.navigate().to("http://192.168.36.254/litecart");
