@@ -53,10 +53,10 @@ public class FeatureMaker {
     }
 
 
-    public static void writeFeatureFiles(JSONObject scenarios, HashMap stepsMap) throws IOException, ParseException {
+    public static void writeFeatureFiles(String scenarios, HashMap stepsMap) throws IOException, ParseException {
         JSONParser jsonParser = new JSONParser();
-        jsonParser.parse(scenarios.toString());
-        for (Object scenario : scenarios.entrySet()) {
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(scenarios);
+        for (Object scenario : jsonObject.entrySet()) {
             Map.Entry entry = (Map.Entry) scenario;
             FeatureFile file = createFeatureText(entry.getKey().toString(), entry.getValue().toString(), stepsMap);
             writeToFile(file);

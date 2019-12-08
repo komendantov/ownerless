@@ -15,8 +15,11 @@ import org.reflections.util.ConfigurationBuilder;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,6 +32,7 @@ import java.util.Set;
  * Class for searching annotated methods.
  */
 public class AnnotationHelper {
+    private static String ALL_FLOWS_PATH = System.getProperty("user.dir") + "\\src\\test\\resources\\testflows\\all_flows.json";
 
 
     private AnnotationHelper() {
@@ -116,6 +120,9 @@ public class AnnotationHelper {
        AnnotationHelper annotationHelper =  new AnnotationHelper();
        JSONObject matrix = annotationHelper.prepareStepsMatrix();
         HashMap map = annotationHelper.prepareStepsMap();
-        FeatureMaker.writeFeatureFiles(matrix, map);
+        StringBuilder sb = new StringBuilder();
+        ArrayList<String> strings = (ArrayList) Files.readAllLines(Paths.get(ALL_FLOWS_PATH));
+        strings.forEach(string  -> sb.append(string));
+        FeatureMaker.writeFeatureFiles(sb.toString(), map);
     }
 }
