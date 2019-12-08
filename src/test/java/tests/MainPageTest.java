@@ -32,7 +32,7 @@ public class MainPageTest extends TestBase {
         softAssert.assertAll();
     }
 
-    @Step(shortName = "verifyProductDetails", followedSteps = {"addProductToCart"})
+    @Step(shortName = "verifyProductDetails", preconditionSteps = {"addProductToCart"})
     @Then("I verify product details$")
     public void i_verify_product_details() {
         System.out.println("--- testProductDetails ---");
@@ -77,7 +77,7 @@ public class MainPageTest extends TestBase {
         }
     }
 
-    @Step(shortName = "removeAllFromCart", followedSteps = {"addProductToCart"})
+    @Step(shortName = "removeAllFromCart", preconditionSteps = {"addProductToCart"})
     @Then("I remove all from cart")
     public void i_remove_all_from_cart() {
         MainPage mainPage = new MainPage(driver);

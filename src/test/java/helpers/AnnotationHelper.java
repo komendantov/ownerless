@@ -1,8 +1,8 @@
 package helpers;
 
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.But;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import model.Step;
@@ -47,6 +47,22 @@ public class AnnotationHelper {
         return reflections.getMethodsAnnotatedWith(annotation);
     }
 
+    /**
+     * Checking whether the Cucumber annotation is an annotation.
+     *
+     * @param annotation
+     * @return is it cucumber annotation
+     */
+    private static boolean isCucumberAnnotation(Annotation annotation) {
+        List<Class> gherkinClasses = new ArrayList<>();
+        Collections.addAll(gherkinClasses, Given.class, When.class, And.class, Then.class, But.class);
+        return gherkinClasses.contains(annotation.annotationType());
+    }
+
+    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        System.out.println(new AnnotationHelper().prepareStepsMatrix());
+        System.out.println(new AnnotationHelper().prepareStepsMap());
+    }
 
     public JSONObject prepareStepsMatrix() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Set<Method> methods = giveAllAnnotatedMethods("tests", Step.class);
@@ -59,10 +75,10 @@ public class AnnotationHelper {
             AnnotationData annotatedStep = new AnnotationData();
             if (annotation.annotationType() == Step.class) {
                 annotatedStep.setShortName((String) annotation.annotationType().getDeclaredMethod("shortName").invoke(annotation));
-                String[] followedSteps = ((String[]) annotation.annotationType().getDeclaredMethod("followedSteps").invoke(annotation));
-                JSONArray stepFollowedSteps = new JSONArray();
-                stepFollowedSteps.addAll(Arrays.asList(followedSteps));
-                annotationMap.put(annotatedStep.getShortName(), stepFollowedSteps);
+                String[] preconditionSteps = ((String[]) annotation.annotationType().getDeclaredMethod("preconditionSteps").invoke(annotation));
+                JSONArray stepPreconditionSteps = new JSONArray();
+                stepPreconditionSteps.addAll(Arrays.asList(preconditionSteps));
+                annotationMap.put(annotatedStep.getShortName(), stepPreconditionSteps);
             }
         }
         return new JSONObject(annotationMap);
@@ -96,22 +112,5 @@ public class AnnotationHelper {
             stepsMap.put(annotatedStep.getShortName(), annotatedStep.getGherkinName());
         }
         return stepsMap;
-    }
-
-    /**
-     * Checking whether the Cucumber annotation is an annotation.
-     *
-     * @param annotation
-     * @return is it cucumber annotation
-     */
-    private static boolean isCucumberAnnotation(Annotation annotation) {
-        List<Class> gherkinClasses = new ArrayList<>();
-        Collections.addAll(gherkinClasses, Given.class, When.class, And.class, Then.class, But.class);
-        return gherkinClasses.contains(annotation.annotationType());
-    }
-
-    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        System.out.println(new AnnotationHelper().prepareStepsMatrix());
-        System.out.println(new AnnotationHelper().prepareStepsMap());
     }
 }

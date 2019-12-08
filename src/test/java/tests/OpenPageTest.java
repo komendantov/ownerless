@@ -13,7 +13,7 @@ public class OpenPageTest extends TestBase {
         initWebDriver();
     }
 
-    @Step(shortName = "openMainPage",followedSteps={"login","openCreateAccountPage","verifyProductStickerIsDisplayed","openProductDetailsPage","openCampaignProductDetailsPage","addProductToCart","openCartPageByCheckout"})
+    @Step(shortName = "openMainPage", preconditionSteps ={"login","openCreateAccountPage","verifyProductStickerIsDisplayed","openProductDetailsPage","openCampaignProductDetailsPage","addProductToCart","openCartPageByCheckout"})
     @When("I create my first test")
     public void i_create_my_first_test() {
         driver.navigate().to("http://www.google.com");
