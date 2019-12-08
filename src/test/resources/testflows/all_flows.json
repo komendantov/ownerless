@@ -1,64 +1,64 @@
 {
-  "openMainPage -> loginUser": [
+  "openMainPage to login": [
     "openMainPage",
-    "loginUser"
+    "login"
   ],
-  "openMainPage -> logoutUser": [
+  "openMainPage to logout": [
     "openMainPage",
-    "loginUser",
-    "logoutUser"
+    "login",
+    "logout"
   ],
-  "openMainPage -> openCreateAccountPage": [
+  "openMainPage to openCreateAccountPage": [
     "openMainPage",
     "openCreateAccountPage"
   ],
-  "openMainPage -> fillCreateAccountFields": [
+  "openMainPage to fillCreateAccountFields": [
     "openMainPage",
     "openCreateAccountPage",
     "fillCreateAccountFields"
   ],
-  "openMainPage -> verifyCreateAccountSuccessMessage": [
+  "openMainPage to verifyCreateAccountSuccessMessage": [
     "openMainPage",
     "openCreateAccountPage",
     "fillCreateAccountFields",
     "verifyCreateAccountSuccessMessage"
   ],
-  "openMainPage -> verifyProductStickerIsDisplayed": [
+  "openMainPage to verifyProductStickerIsDisplayed": [
     "openMainPage",
     "verifyProductStickerIsDisplayed"
   ],
-  "openMainPage -> openProductDetailsPage": [
+  "openMainPage to openProductDetailsPage": [
     "openMainPage",
     "openProductDetailsPage"
   ],
-  "openMainPage -> openCampaignProductDetailsPage": [
+  "openMainPage to openCampaignProductDetailsPage": [
     "openMainPage",
     "openCampaignProductDetailsPage"
   ],
-  "openMainPage -> verifyProductDetails": [
+  "openMainPage to verifyProductDetails": [
     "openMainPage",
     "openProductDetailsPage",
     "verifyProductDetails"
   ],
-  "openMainPage -> verifyProductDetailsPageElements": [
+  "openMainPage to verifyProductDetailsPageElements": [
     "openMainPage",
     "openProductDetailsPage",
     "verifyProductDetailsPageElements"
   ],
-  "openMainPage -> AddProductToCart": [
+  "openMainPage to AddProductToCart": [
     "openMainPage",
     "addProductToCart"
   ],
-  "openMainPage -> openCartPageByCheckout": [
+  "openMainPage to openCartPageByCheckout": [
     "openMainPage",
     "openCartPageByCheckout"
   ],
-  "openMainPage -> removeAllFromCart": [
+  "openMainPage to removeAllFromCart": [
     "openMainPage",
     "openCartPageByCheckout",
     "removeAllFromCart"
   ],
-  "openMainPage -> verifyCartIsEmpty": [
+  "openMainPage to verifyCartIsEmpty": [
     "openMainPage",
     "openCartPageByCheckout",
     "removeAllFromCart",
